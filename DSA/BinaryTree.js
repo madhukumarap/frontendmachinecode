@@ -77,6 +77,38 @@ class BinaryTree {
             console.log(root.value);
         }
     }
+    //BFS Algorithms
+    levelOrder(){
+        //for better time use queue implememtation
+        const queue = []; //if we use array it require more time 
+        queue.push(this.root)
+        while(queue.length){
+            let curr = queue.shift();
+            console.log(curr.value)
+            if(curr.left){
+                queue.push(curr.left)
+            }
+            if(curr.right){
+                queue.push(curr.right)
+            }
+        }
+    }
+    //find the min the left most leaf vakue is min value
+    min(root){
+        if(!root.left){
+            return root.value
+        }else{
+            return this.min(root.left)
+        }
+    }
+    //max the right most leaf value is the max value
+    max(root){
+        if(!root.right){
+            return root.value
+        }else{
+            return this.max(root.right)
+        }
+    }
 }
 
 // Usage example
@@ -100,3 +132,8 @@ console.log("PostOrder Traversal:");
 bst.PostOrder(bst.root);
 //DFS(Depth First Search) start from root node and explore the possible along each branch
 //3 type of DFS PreOrder(Root,Left,Right),PostOrder(Left,Right,Root),InOrder(Left,Root,Right) 
+console.log("The Output of BFS Algo")
+bst.levelOrder()
+
+console.log("the min value is", bst.min(bst.root))
+console.log("the max value is", bst.max(bst.root))
