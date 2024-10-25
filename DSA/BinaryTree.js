@@ -109,6 +109,44 @@ class BinaryTree {
             return this.max(root.right)
         }
     }
+    //delete the node with 3 scenario
+    //remove node - no child
+    //remove node - one child
+    //remove node - two child
+    delete(value){
+        this.root = this.deleteNode(this.root, value)
+    }
+    deleteNode(root, value) {
+    if (root === null) {
+        return root;
+    }
+
+    // Traverse the tree
+    if (value < root.value) {
+        root.left = this.deleteNode(root.left, value);
+    } else if (value > root.value) {
+        root.right = this.deleteNode(root.right, value);
+    } else {
+        // Node with only one child or no child
+        if (!root.left && !root.right) {
+            return null; // Case 1: No child
+        } else if (!root.left) {
+            return root.right; // Case 2: One child (right)
+        } else if (!root.right) {
+            return root.left; // Case 3: One child (left)
+        }
+
+        // Node with two children: Get the inorder successor (smallest in the right subtree)
+        root.value = this.min(root.right);
+
+        // Delete the inorder successor
+        root.right = this.deleteNode(root.right, root.value);
+    }
+
+    return root;
+}
+
+
 }
 
 // Usage example
@@ -134,6 +172,10 @@ bst.PostOrder(bst.root);
 //3 type of DFS PreOrder(Root,Left,Right),PostOrder(Left,Right,Root),InOrder(Left,Root,Right) 
 console.log("The Output of BFS Algo")
 bst.levelOrder()
-
+console.log("the deleted elemet is", bst.delete(3))
 console.log("the min value is", bst.min(bst.root))
 console.log("the max value is", bst.max(bst.root))
+console.log("PostOrder Traversal:");
+console.log("the deleted elemet is", bst.delete(7))
+
+bst.PostOrder(bst.root);
